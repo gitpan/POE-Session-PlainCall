@@ -1,5 +1,9 @@
 Revision history for Perl extension POE::Session::PlainCall.
 
+0.0200 Apr 12 2009
+    - Added POD tests
+    - Tweak POD
+
 0.0100 Apr 5 2009
     - First release to CPAN
 

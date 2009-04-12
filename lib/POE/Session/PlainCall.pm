@@ -9,8 +9,7 @@ use Scalar::Util qw( blessed );
 
 require Exporter;
 
-
-our $VERSION = '0.0100';
+our $VERSION = '0.0200';
 
 
 #######################################
@@ -59,10 +58,17 @@ sub instantiate
     if( $self->[SE_RUNNING] or $self->[SE_MYSTATES] ) {
         die "Definition of POE::Session changed!  $self needs to be modified.\n";
     }
+    $self->__init;
+    return $self;
+}
+
+sub __init
+{
+    my( $self ) = @_;
     $self->[SE_RUNNING] = 0;
     # warn "keys = ", join ', ', keys %OURS;
     $self->[SE_MYSTATES] = {%OURS};
-    return $self;
+    $self->SUPER::__init if $self->can( 'SUPER::__init' );
 }
 
 #######################################
@@ -227,7 +233,6 @@ sub _invoke_state
     }
 
     # Package and object states are invoked this way.
-
     my ($object, $method) = @{$handler};
     local $POE_HOLDER  = bless [
       ( $object,                        # object
@@ -397,9 +402,9 @@ Method overloading becomes much less fraught:
     shift->SUPER::method( @_ ); # wait, what if shift was already called?
     # POE::Session::PlainCall
     $self->SUPER::method( @_ );
-    
+
 The other elements of C<@_> (C<SENDER>, C<HEAP>, C<CALLER_STATE>, etc)
-are availabe through a small object called L</poe>.
+are available through a small object called L</poe>.
 
     my $kernel = poe->kernel;       # $_[KERNEL] / $poe_kernel
     my $heap = poe->heap;           # $_[HEAP]
@@ -543,7 +548,7 @@ Is the same as:
     events => ARRAYREF
     events => HASHREF
 
-Syntatic sugar for L</states>
+Syntactic sugar for L</states>
 
 =back
 
@@ -552,9 +557,9 @@ Syntatic sugar for L</states>
     poe->session->state( $event => $object => $method );
     poe->session->state( $event );
 
-To allow POE::Session::PlainCall to play nicely with other modules, specificly 
-C<POE::Wheel>s, POE::Session::PlainCall must track which event handlers need the
-new call signature and which need the POE call signature.
+To allow POE::Session::PlainCall to play nicely with other modules,
+specifically C<POE::Wheel>s, POE::Session::PlainCall must track which event
+handlers need the new call signature and which need the POE call signature.
 
 New event handlers defined with C<POE::Kernel/state> will be invoked with the POE
 call signature.  New event handlers defined with C</state> will be invoked
@@ -585,7 +590,7 @@ Courtesy export of $POE::Kernel::poe_kernel.
 
 =head2 poe
 
-The C<poe> function returns an object that you use to find aditional
+The C<poe> function returns an object that you use to find additional
 information about an event method invocation:
 
 =over 4
@@ -619,7 +624,7 @@ The name of the currently running event.  Equivalent to C<$_[STATE]>.
 
 =item event
 
-Syntatic sugar for L</state>.
+Syntactic sugar for L</state>.
 
 =item method
 

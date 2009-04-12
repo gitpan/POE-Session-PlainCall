@@ -4,6 +4,8 @@ MANIFEST
 README
 lib/POE/Session/PlainCall.pm
 t/00_compile.t
+t/01_pod.t
+t/02_pod_coverage.t
 t/10_simple.t
 t/11_factory.t
 t/12_default.t

@@ -9,12 +9,32 @@ eval q{
     $config->ignore( ['site_perl'] );
 };
 
+package MY;
+
+use strict;
+use warnings;
+
+sub init_PM
+{
+    my( $self, @args ) = @_;
+
+    $self->SUPER::init_PM( @args );
+
+    foreach my $file ( keys %{ $self->{PM} || {} } ) {
+        next unless $file =~ /^lib.+\.pm$/;
+        delete $self->{PM}{$file};
+    }
+}
+
+package main;
+
 WriteMakefile(
     NAME              => 'POE::Session::PlainCall',
     VERSION_FROM      => 'lib/POE/Session/PlainCall.pm',
     LICENSE           => 'perl',
     PREREQ_PM         => {
-                    Scalar::Util => 0,
+                'POE'           => 1,
+                'Scalar::Util'  => 0,
             },
     ($] >= 5.005 ?
       (ABSTRACT_FROM  => 'lib/POE/Session/PlainCall.pm', 
