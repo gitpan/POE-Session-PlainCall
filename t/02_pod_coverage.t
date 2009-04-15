@@ -11,7 +11,7 @@ plan tests => 1;
 pod_coverage_ok(
         "POE::Session::PlainCall",
         { also_private => [ 
-                    qr/^(SE)_.+$/,
+                    qr/^(SE|EN|OPT)_.+$/,
                     qr/^(instantiate)$/
                 ], 
         },
