@@ -1,3 +1,4 @@
+# use 5.008008;
 use ExtUtils::MakeMaker;
 
 # Add in the Ex::MM::Coverage stuff.  But silently ignore failure.
@@ -13,14 +14,14 @@ package MY;
 use strict;
 use warnings;
 
-sub init_PM
+sub init_PMxx
 {
     my( $self, @args ) = @_;
 
     $self->SUPER::init_PM( @args );
 
     foreach my $file ( keys %{ $self->{PM} || {} } ) {
-        next if $file =~ /^lib.+\.pm$/;
+        next unless $file =~ /^lib.+\.pm$/;
         delete $self->{PM}{$file};
     }
 }

@@ -27,7 +27,7 @@ use Test::More;
 use POE::Session::PlainCall;
 
 my $SESSION;
-my $SELF;
+our $SELF;
 
 #######################################
 sub spawn

@@ -21,13 +21,13 @@ DEPENDENCIES
 
 This module requires these other modules and libraries:
 
-  blah blah blah
+  POE
 
 COPYRIGHT AND LICENCE
 
 Put the correct copyright and licence information here.
 
-Copyright (C) 2009 by Philip Gwyn
+Copyright (C) 2009, 2011 by Philip Gwyn
 
 Contains code from L<POE::Session>. Please see L<POE> for more
 information about authors and contributors.

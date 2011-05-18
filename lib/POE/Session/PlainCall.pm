@@ -9,7 +9,7 @@ use Scalar::Util qw( blessed );
 
 require Exporter;
 
-our $VERSION = '0.0201';
+our $VERSION = '0.0300';
 
 
 #######################################
@@ -32,6 +32,19 @@ BEGIN {
     *SE_NAMESPACE = \&POE::Session::SE_NAMESPACE;
     *SE_OPTIONS   = \&POE::Session::SE_OPTIONS;
     *SE_STATES    = \&POE::Session::SE_STATES;
+    if( POE::Session->can( 'SE_ID' ) ) {
+        # POE 1.300 + 
+        *SE_ID       = \&POE::Session::SE_ID;
+        eval '
+        *SE_RUNNING  = sub () { POE::Session::SE_ID+1 };
+        *SE_MYSTATES = sub () { POE::Session::SE_ID+2 };
+        ';
+    }
+    else {
+        # POE 1.299- 
+        *SE_RUNNING  = sub () { POE::Session::SE_STATES+1 };
+        *SE_MYSTATES = sub () { POE::Session::SE_STATES+2 };
+    }
 
     *EN_SIGNAL    = \&POE::Session::EN_SIGNAL;    
     *EN_DEFAULT   = \&POE::Session::EN_DEFAULT;
@@ -40,8 +53,6 @@ BEGIN {
     *OPT_DEBUG    = \&POE::Session::OPT_DEBUG;
     *OPT_DEFAULT  = \&POE::Session::OPT_DEFAULT;
 }
-sub SE_RUNNING () { SE_STATES+1 }
-sub SE_MYSTATES () { SE_STATES+2 }
 
 ############################################################################
 sub _loggable
@@ -675,7 +686,7 @@ Philip Gwyn, E<lt>gwyn-at-cpan.org<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2009 by Philip Gwyn
+Copyright (C) 2009, 2011 by Philip Gwyn
 
 Contains code from L<POE::Session>.  
 Please see L<POE> for more information about authors and contributors.
