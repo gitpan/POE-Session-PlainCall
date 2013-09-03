@@ -9,7 +9,7 @@ use Scalar::Util qw( blessed );
 
 require Exporter;
 
-our $VERSION = '0.0300';
+our $VERSION = '0.0301';
 
 
 #######################################

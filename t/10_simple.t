@@ -6,7 +6,11 @@ use warnings;
 use POE;
 use POE::Session::PlainCall;
 
-use Test::More tests => 55;
+use Test::More;
+
+# $poe_kernel->[POE::Session::CALLER_FILE] changed slightly (during ->yield)
+plan tests => $POE::VERSION >= 1.356 ? 56 : 55;
+
 
 #####
 my $id = My::Session->spawn();
@@ -95,7 +99,7 @@ sub sender_is
     is( poe->SENDER->ID, $want, "Correct ->SENDER for $state" );
 
     if( $SESSION and $want eq $SESSION ) {
-        is( poe->caller_file, __FILE__, " ... ->caller_file" )
+        is( poe->caller_file, __FILE__, " ... ->caller_file (".poe->caller_file.")" )
                     unless poe->caller_file eq $INC{'POE/Kernel.pm'};
         if( $self->{state} ) {
             is( poe->caller_state, delete $self->{state}, " ... ->caller_state" );

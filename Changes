@@ -1,5 +1,9 @@
 Revision history for Perl extension POE::Session::PlainCall.
 
+0.0301 Sep 3 2013
+    - Fixed for POE 1.356
+        Thank you Andreas König
+
 0.0300 May 16 2011
     - Fixed for POE 1.311
 

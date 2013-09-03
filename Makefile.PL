@@ -38,5 +38,5 @@ WriteMakefile(
             },
     ($] >= 5.005 ?
       (ABSTRACT_FROM  => 'lib/POE/Session/PlainCall.pm', 
-       AUTHOR         => 'Philip Gwyn <gwyn-at-pied.nu>') : ()),
+       AUTHOR         => 'Philip Gwyn <gwyn -at- cpan.org>') : ()),
 );
